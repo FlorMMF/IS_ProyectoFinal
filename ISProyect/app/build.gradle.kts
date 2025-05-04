@@ -6,6 +6,10 @@ android {
     namespace = "com.example.isproyect"
     compileSdk = 35
 
+    buildFeatures{
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.isproyect"
         minSdk = 24
@@ -25,6 +29,8 @@ android {
             )
         }
     }
+
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

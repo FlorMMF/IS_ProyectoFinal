@@ -13,13 +13,14 @@ public class UsuarioDBconexion extends SQLiteOpenHelper {
     private static final int DB_VERSION=2;
 
     public UsuarioDBconexion(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+
+        super(context, "usuario.db", null, DB_VERSION);
     }
 
      @Override
     public void onCreate(SQLiteDatabase db) {
          db.execSQL("CREATE TABLE " + EntradaUsuario.NOMBRE_TABLA + " ("
-                 + EntradaUsuario._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                 + EntradaUsuario._ID + " INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, "
                  + EntradaUsuario.ID + " TEXT UNIQUE, "
                  + EntradaUsuario.NOMBRE + " TEXT NOT NULL, "
                  + EntradaUsuario.CONTRASENA + " TEXT NOT NULL "
@@ -82,7 +83,21 @@ public class UsuarioDBconexion extends SQLiteOpenHelper {
         }
     }
 
+    public boolean checkUser(String user)
+    {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("Select * from Usuario where ID = ?",new String[]{user});
 
+        return cursor.getCount() > 0;
+    }
+
+    public boolean checkUserPass(String user, String pass)
+    {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("Select * from Usuario where ID = ? AND Contrasena = ?",new String[]{user, pass});
+
+        return cursor.getCount() > 0;
+    }
 
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVer, int newVer){
