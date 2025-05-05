@@ -39,6 +39,15 @@
                 android:hint="Contraseña"
                 android:padding="8dp" />
 
+            <EditText
+                android:id="@+id/signup_password2"
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="30dp"
+                android:drawablePadding="8dp"
+                android:hint="Repite la Contraseña"
+                android:padding="8dp" />
+
 
             <EditText
                 android:id="@+id/signup_Nombre"
@@ -92,6 +101,43 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="femenino" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tepilepsia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Tipo de epilepsia" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/radio_tAepilepisa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="a" />
+
+                <RadioButton
+                    android:id="@+id/radio_tBepilepisa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="b" />
+
+                <RadioButton
+                    android:id="@+id/radio_tCepilepisa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="c" />
+
+                <RadioButton
+                    android:id="@+id/radio_tDepilepisa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="d" />
             </RadioGroup>
 
             <Button
