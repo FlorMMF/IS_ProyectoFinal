@@ -85,18 +85,23 @@ public class UsuarioDBconexion extends SQLiteOpenHelper {
 
     public boolean checkUser(String user)
     {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("Select * from Usuario where ID = ?",new String[]{user});
 
-        return cursor.getCount() > 0;
+        boolean b = cursor.getCount() > 0;
+        cursor.close();
+        return b;
     }
 
     public boolean checkUserPass(String user, String pass)
     {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("Select * from Usuario where ID = ? AND Contrasena = ?",new String[]{user, pass});
 
-        return cursor.getCount() > 0;
+        boolean b = cursor.getCount() > 0;
+        cursor.close();
+        return b;
+
     }
 
     @Override
