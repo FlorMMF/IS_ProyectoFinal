@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+
+xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:id = "@+id/activity_login"
+    tools:context=".Login">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Registrar Evento"/>
+    <TextView
+        android:id="@+id/toolbarTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="Line one"
+        android:textAppearance="@android:style/TextAppearance.WindowTitle"
+        android:visibility="visible" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/text_view_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="Fecha" />
+
+                <EditText
+                    android:id="@+id/evento_diaEvento"
+                    android:layout_width="350dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:drawablePadding="8dp"
+                    android:hint="Día del evento"
+                    android:inputType="date"
+                    android:padding="8dp"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"/>
+
+                <EditText
+                    android:id="@+id/evento_horaEvento"
+                    android:layout_width="350dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:drawablePadding="8dp"
+                    android:hint="Hora del evento"
+                    android:inputType="date"
+                    android:padding="8dp"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"/>
+
+                <TextView
+                    android:id="@+id/text_manifestaciones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="18dp"
+                    android:text="Manifestaciones sensoriales" />
+
+                <CheckBox android:id="@+id/evento_conciencia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Perdida de la conciencia" />
+
+                <CheckBox android:id="@+id/evento_desorientado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sensación de desorentación" />
+
+                <CheckBox android:id="@+id/evento_visibilidad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trastornos visuales" />
+
+                <CheckBox android:id="@+id/evento_audivilidad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trastornos auditivos" />
+
+                <CheckBox android:id="@+id/evento_sensorial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trastorno sensorial del cuerpo" />
+
+                <CheckBox android:id="@+id/evento_olfato"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trastornos olfatorios" />
+
+                <CheckBox android:id="@+id/evento_movimiento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Movimiento en manos o pies" />
+
+                <CheckBox android:id="@+id/evento_NOmovimiento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ausencia de moviento" />
+
+                <CheckBox android:id="@+id/evento_relajVesicula"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Relajación de esfínter Vesical" />
+
+                <CheckBox android:id="@+id/evento_relajAnal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Relajación de esfínter Anal" />
+
+                <CheckBox android:id="@+id/evento_rigidez"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rigidez de manos y/o pies" />
+
+                <CheckBox android:id="@+id/evento_relajMusculos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Relajación de musculos" />
+
+                <CheckBox android:id="@+id/evento_sacudidas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sacudidas de todo o parte del cuerpo" />
+
+                <TextView
+                    android:id="@+id/text_farmacos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Tratamiento anticrisis" />
+
+                <CheckBox android:id="@+id/CBZ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Carbamazepina" />
+
+                <CheckBox android:id="@+id/CLB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clobazam" />
+
+                <CheckBox android:id="@+id/CZP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clonazepam" />
+
+                <CheckBox android:id="@+id/DZP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Diazepam" />
+
+                <CheckBox android:id="@+id/ESM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Etosuximida" />
+
+                <CheckBox android:id="@+id/FBM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Felbamato" />
+
+                <CheckBox android:id="@+id/GBP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gabapentina" />
+
+                <CheckBox android:id="@+id/LEV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Levetiracetam" />
+
+                <CheckBox android:id="@+id/LTG"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lamotrigina" />
+
+                <CheckBox android:id="@+id/LZP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lorazepam" />
+
+                <CheckBox android:id="@+id/MDZ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Midazolam" />
+
+                <CheckBox android:id="@+id/OXC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Oxcarbazepina" />
+
+                <CheckBox android:id="@+id/PB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fenobarbital" />
+
+                <CheckBox android:id="@+id/PGB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pregabalina" />
+
+                <CheckBox android:id="@+id/PHT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fenitoína" />
+
+                <CheckBox android:id="@+id/PRM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Primidona" />
+
+                <CheckBox android:id="@+id/RFM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rufinamida" />
+
+                <CheckBox android:id="@+id/TGB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tiagabina" />
+
+                <CheckBox android:id="@+id/TPM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Topiramato" />
+
+                <CheckBox android:id="@+id/VGB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vigabatrina" />
+
+                <CheckBox android:id="@+id/VPA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ácido valproico" />
+
+                <CheckBox android:id="@+id/ZNS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Zonisamida" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
