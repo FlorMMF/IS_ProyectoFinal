@@ -22,7 +22,7 @@ public class UsuarioDBconexion extends SQLiteOpenHelper {
          db.execSQL("CREATE TABLE " + EntradaUsuario.NOMBRE_TABLA + " ("
                  + EntradaUsuario._ID + " INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, "
                  + EntradaUsuario.ID + " TEXT UNIQUE, "
-                 + EntradaUsuario.NOMBRE + " TEXT NOT NULL, "
+                 + EntradaUsuario.NOMBRE + " TEXT NOT NULL UNIQUE, "
                  + EntradaUsuario.CONTRASENA + " TEXT NOT NULL "
                  + ")");
 
