@@ -37,6 +37,7 @@
                 android:layout_marginTop="30dp"
                 android:drawablePadding="8dp"
                 android:hint="Contraseña"
+                android:inputType="textPassword"
                 android:padding="8dp" />
 
             <EditText
@@ -46,6 +47,7 @@
                 android:layout_marginTop="30dp"
                 android:drawablePadding="8dp"
                 android:hint="Repite la Contraseña"
+                android:inputType="textPassword"
                 android:padding="8dp" />
 
 
