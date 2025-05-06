@@ -7,14 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.DatePicker;
+import android.app.DatePickerDialog;
+import java.util.Calendar;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.isproyect.databinding.ActivitySignUpBinding;
+
+import java.util.Calendar;
 
 import SQL.Usuario;
 import SQL.UsuarioDBconexion;
@@ -23,6 +24,10 @@ public class sign_up extends AppCompatActivity {
 
 ActivitySignUpBinding binding;
 UsuarioDBconexion UsuarioDB;
+
+private String date;
+
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -76,6 +81,30 @@ UsuarioDBconexion UsuarioDB;
             Intent intent = new Intent(sign_up.this, Login.class);
             startActivity(intent);
         });
+
+
+        binding.signupNacimiento.setOnClickListener(v-> {
+
+                final Calendar c = Calendar.getInstance();
+
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        sign_up.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datepicker, int year, int month, int dayOfMonth) {
+                        date =dayOfMonth + "/" + (month + 1) + "/" + year;
+                        binding.signupNacimiento.setText(date);
+                    }
+                } , year, month, day) ;
+
+                dialog.show();
+
+        });
     }
 
     private void clearForm(ViewGroup viewById) {
@@ -89,4 +118,8 @@ UsuarioDBconexion UsuarioDB;
                 clearForm((ViewGroup)view);
         }
     }
+
+
+
 }
+
