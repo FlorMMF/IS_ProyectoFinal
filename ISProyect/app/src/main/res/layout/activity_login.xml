@@ -31,10 +31,11 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
 
-                    android:drawableLeft="@drawable/baseline_email_24"
+                    android:drawableStart="@drawable/baseline_email_24"
                     android:drawablePadding="8dp"
                     android:hint="Usuario"
-                    android:padding="8dp" />
+                    android:padding="8dp"
+                    tools:ignore="Autofill,TextFields" />
 
                 <EditText
                     android:id="@+id/login_password"
@@ -42,11 +43,12 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="20dp"
 
-                    android:drawableLeft="@drawable/baseline_lock_24"
+                    android:drawableStart="@drawable/baseline_lock_24"
                     android:drawablePadding="8dp"
                     android:hint="Password"
                     android:inputType="textPassword"
-                    android:padding="8dp" />
+                    android:padding="8dp"
+                    tools:ignore="Autofill" />
 
                 <Button
                     android:id="@+id/login_button"
@@ -67,6 +69,16 @@
                     android:text="Registrarse"
                     android:textColor="@color/morado"
                     android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/debug_button"
+                    android:layout_width="350dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Debug"
+                    android:textSize="18sp"
+                    app:cornerRadius="30dp" />
+
 
             </LinearLayout>
         </LinearLayout>

@@ -3,14 +3,17 @@ package com.example.isproyect;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 import android.widget.DatePicker;
 import android.app.DatePickerDialog;
 import java.util.Calendar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.isproyect.databinding.ActivitySignUpBinding;
@@ -26,6 +29,17 @@ ActivitySignUpBinding binding;
 UsuarioDBconexion UsuarioDB;
 
 private String date;
+    private String user;
+    private String pass;
+    private String pass2;
+    private String nombre;
+    private String apellido;
+    private String gender;
+    private String epilepsia;
+    private String paciente;
+private int year;
+private int month;
+private int day;
 
 
 
@@ -51,11 +65,15 @@ private String date;
 
 
         binding.signupButton.setOnClickListener(v -> {
-            String user = binding.signupUser.getText().toString();
-            String nombre = binding.signupNombre.getText().toString();
-            String apellido = binding.signupApellido.getText().toString();
-            String pass = binding.signupPassword.getText().toString();
-            String pass2 = binding.signupPassword2.getText().toString();
+            user = binding.signupUser.getText().toString();
+            nombre = binding.signupNombre.getText().toString();
+            apellido = binding.signupApellido.getText().toString();
+            paciente = nombre+" "+apellido;
+            pass = binding.signupPassword.getText().toString();
+            pass2 = binding.signupPassword2.getText().toString();
+
+            checkGenero((ViewGroup) v);
+            checkEpilepsia((ViewGroup) v);
 
             Usuario nuevo = new Usuario(user, pass);
 
@@ -70,6 +88,7 @@ private String date;
                 clearForm(findViewById(R.id.activity_sign_up));
                 Intent intent = new Intent(sign_up.this, Login.class);
                 startActivity(intent);
+                finish();
             }else {
                 Toast.makeText(sign_up.this,"Error en registro",Toast.LENGTH_SHORT).show();
             }
@@ -80,6 +99,7 @@ private String date;
             clearForm(findViewById(R.id.activity_sign_up));
             Intent intent = new Intent(sign_up.this, Login.class);
             startActivity(intent);
+            finish();
         });
 
 
@@ -87,9 +107,9 @@ private String date;
 
                 final Calendar c = Calendar.getInstance();
 
-                int year = c.get(Calendar.YEAR);
-                int month = c.get(Calendar.MONTH);
-                int day = c.get(Calendar.DAY_OF_MONTH);
+                year = c.get(Calendar.YEAR);
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DAY_OF_MONTH);
 
 
 
@@ -107,7 +127,7 @@ private String date;
         });
     }
 
-    private void clearForm(ViewGroup viewById) {
+    private void clearForm(@NonNull ViewGroup viewById) {
         for (int i = 0, count = viewById.getChildCount(); i < count; ++i) {
             View view = viewById.getChildAt(i);
             if (view instanceof EditText) {
@@ -118,6 +138,32 @@ private String date;
                 clearForm((ViewGroup)view);
         }
     }
+
+    private void checkGenero(ViewGroup viewById){
+        if (binding.radioMasculino.isChecked()){
+            gender = "Masculino";
+        };
+        if (binding.radioFemenino.isChecked()){
+            gender = "Femenino";
+        }
+    }
+
+    private void checkEpilepsia(ViewGroup viewById){
+        if (binding.radioTAepilepisa.isChecked()){
+            epilepsia = "A";
+        };
+        if (binding.radioTBepilepisa.isChecked()){
+            epilepsia = "B";
+        };
+        if (binding.radioTCepilepisa.isChecked()){
+            epilepsia = "C";
+        };
+        if (binding.radioTDepilepisa.isChecked()){
+            epilepsia = "D";
+        }
+    }
+
+
 
 
 

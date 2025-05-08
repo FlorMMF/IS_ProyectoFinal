@@ -76,15 +76,14 @@
                 android:layout_width="350dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
-                android:drawablePadding="8dp"
-                android:hint="Nacimiento"
-                android:inputType="date"
-                android:padding="8dp"
                 android:clickable="false"
                 android:cursorVisible="false"
+                android:drawablePadding="8dp"
                 android:focusable="false"
-                android:focusableInTouchMode="false"/>
-
+                android:focusableInTouchMode="false"
+                android:hint="Nacimiento"
+                android:inputType="date"
+                android:padding="8dp" />
 
 
             <TextView

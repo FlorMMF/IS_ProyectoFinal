@@ -87,6 +87,17 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                     android:focusableInTouchMode="false"/>
 
                 <TextView
+                    android:id="@+id/evento_manif"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@android:drawable/editbox_background"
+                    android:drawableRight="@android:drawable/arrow_down_float"
+                    android:drawablePadding="16dp"
+                    android:hint="Manifestaciones Sensoriales"
+                    android:padding="12dp" />
+
+                <TextView
                     android:id="@+id/text_manifestaciones"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -164,6 +175,11 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="Tratamiento anticrisis" />
+
+<!--                <Spinner-->
+<!--                    android:id="@+id/farmacos_spinner"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content" />-->
 
                 <CheckBox android:id="@+id/CBZ"
                     android:layout_width="wrap_content"

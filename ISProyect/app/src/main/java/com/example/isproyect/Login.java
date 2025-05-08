@@ -56,6 +56,7 @@ public class Login extends AppCompatActivity {
                 {
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                 }else
                 {
                     Toast.makeText(Login.this,"Nombre de usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
@@ -68,6 +69,17 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Login.this, sign_up.class);
                 startActivity(intent);
+                finish();
+            }
+        });
+
+        binding.debugButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent intent = new Intent(Login.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+
             }
         });
     }

@@ -1,7 +1,10 @@
 package com.example.isproyect;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.isproyect.R;
 import com.example.isproyect.databinding.ActivityLoginBinding;
@@ -35,5 +38,24 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         */
+
+        binding.eventoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Evento.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Login.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
     }
 }
