@@ -6,6 +6,7 @@ import android.util.Log;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,7 +83,13 @@ public class Evento extends AppCompatActivity {
                         }
                     }
                 });
-
+                Button addFarmacoButton = findViewById(R.id.add_farmaco);
+                View cbzView = findViewById(R.id.CBZ);
+                addFarmacoButton.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        cbzView.setVisibility(View.VISIBLE);
+                    }
+                });
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -130,7 +137,9 @@ public class Evento extends AppCompatActivity {
                 });
                 // show dialog
                 builder.show();
+
             }
+
         });
     }
 
