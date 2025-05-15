@@ -1,22 +1,30 @@
 package com.example.isproyect;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.TimePickerDialog;
+import android.widget.TimePicker;
 
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.isproyect.databinding.ActivityEventoBinding;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+
+import SQL.Usuario;
 
 public class Evento extends AppCompatActivity {
 
@@ -32,9 +40,17 @@ public class Evento extends AppCompatActivity {
             "MF_12","MF_13"};
 
     private String fecha;
-    private String hora;
+    private String horaEvento;
     private String manif;
     private String farm;
+
+    private int year;
+    private int month;
+    private int day;
+
+    private int hora;
+    private int minuto;
+
 
 
 
@@ -132,27 +148,133 @@ public class Evento extends AppCompatActivity {
                 builder.show();
             }
         });
+
+
+        binding.eventoDiaEvento.setOnClickListener(v-> {
+
+            final Calendar c = Calendar.getInstance();
+
+            year = c.get(Calendar.YEAR);
+            month = c.get(Calendar.MONTH);
+            day = c.get(Calendar.DAY_OF_MONTH);
+
+
+
+            DatePickerDialog dialog = new DatePickerDialog(
+                    Evento.this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datepicker, int year, int month, int dayOfMonth) {
+                    fecha =dayOfMonth + "/" + (month + 1) + "/" + year;
+                    binding.eventoDiaEvento.setText(fecha);
+                }
+            } , year, month, day) ;
+
+            dialog.show();
+
+        });
+
+        binding.eventoHoraEvento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar mcurrentTime = Calendar.getInstance();
+                hora = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                minuto = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(Evento.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker,  int hourOfDay, int minute) {
+                        hora = hourOfDay;
+                        String amPm;
+
+                        // Determine AM or PM and adjust hour
+                        if (hora == 0) {
+                            hora += 12;
+                            amPm = "AM";
+                        } else if (hora == 12) {
+                            amPm = "PM";
+                        } else if (hora > 12) {
+                            hora -= 12;
+                            amPm = "PM";
+                        } else {
+                            amPm = "AM";
+                        }
+
+                        // Format hour and minute for display
+                        String formattedHour = (hora < 10) ? "0" + hora : String.valueOf(hora);
+                        String formattedMinute = (minuto < 10) ? "0" + minuto : String.valueOf(minuto);
+
+                        // Display the selected time
+                        horaEvento = formattedHour + " : " + formattedMinute + " " + amPm;
+                        binding.eventoHoraEvento.setText(horaEvento);
+                    }
+                }, hora, minuto, false);
+                mTimePicker.setTitle("Elija Hora");
+                mTimePicker.show();
+
+            }
+        });
+
+        binding.cancelButton.setOnClickListener(v -> {
+            clearForm(findViewById(R.id.activity_evento);
+            Intent intent = new Intent(Evento.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        binding.saveButton.setOnClickListener(v -> {
+            fecha = binding.eventoDiaEvento.getText().toString();
+            horaEvento = binding.eventoHoraEvento.getText().toString();
+            manif = binding.eventoManif.getText().toString();
+            //farm = ;
+
+            if (fecha.isEmpty() || horaEvento.isEmpty()|| manif.isEmpty()) {
+                Toast.makeText(Evento.this, "Necesita llenar campos obligatorios", Toast.LENGTH_SHORT).show();
+//            } else if  (-1 != UsuarioDB.GuardarUsuario(nuevo)){
+//                Toast.makeText(Evento.this, "Evento registrado exitosamente", Toast.LENGTH_SHORT).show();
+//                clearForm(findViewById(R.id.activity_evento));
+//                Intent intent = new Intent(Evento.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
+            }else {
+                Toast.makeText(Evento.this,"Error en registro",Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
-    private void checkManif(ViewGroup viewById){
-        if (binding.eventoConciencia.isChecked()) manif = "Perdida de la conciencia";
-        if (binding.eventoDesorientado.isChecked()) manif = "Sensación de desorentación";
-        if (binding.eventoVisibilidad.isChecked()) manif = "Trastornos visuales";
-        if (binding.eventoAudivilidad.isChecked()) manif = "Trastornos auditivos";
-        if (binding.eventoSensorial.isChecked()) manif = "Trastorno sensorial del cuerpo";
-        if (binding.eventoOlfato.isChecked()) manif = "Trastornos olfatorios";
-        if (binding.eventoMovimiento.isChecked()) manif = "Movimiento en manos o pies";
-        if (binding.eventoNOmovimiento.isChecked()) manif = "Ausencia de moviento";
-        if (binding.eventoRelajVesicula.isChecked()) manif = "Relajación de esfínter Vesical";
-        if (binding.eventoRelajAnal.isChecked()) manif = "Relajación de esfínter Anal";
-        if (binding.eventoRigidez.isChecked()) manif = "Rigidez de manos y/o pies";
-        if (binding.eventoRelajMusculos.isChecked()) manif = "Relajación de musculos";
-        if (binding.eventoSacudidas.isChecked()) manif = "Sacudidas de todo o parte del cuerpo";
+    private void clearForm(@NonNull ViewGroup viewById) {
+        for (int i = 0, count = viewById.getChildCount(); i < count; ++i) {
+            View view = viewById.getChildAt(i);
+            if (view instanceof EditText) {
+                ((EditText)view).setText("");
+            }
+
+            if(view instanceof ViewGroup && (((ViewGroup)view).getChildCount() > 0))
+                clearForm((ViewGroup)view);
+        }
+    }
     }
 
 
 
+//    private void checkManif(ViewGroup viewById){
+//        if (binding.eventoConciencia.isChecked()) manif = "Perdida de la conciencia";
+//        if (binding.eventoDesorientado.isChecked()) manif = "Sensación de desorentación";
+//        if (binding.eventoVisibilidad.isChecked()) manif = "Trastornos visuales";
+//        if (binding.eventoAudivilidad.isChecked()) manif = "Trastornos auditivos";
+//        if (binding.eventoSensorial.isChecked()) manif = "Trastorno sensorial del cuerpo";
+//        if (binding.eventoOlfato.isChecked()) manif = "Trastornos olfatorios";
+//        if (binding.eventoMovimiento.isChecked()) manif = "Movimiento en manos o pies";
+//        if (binding.eventoNOmovimiento.isChecked()) manif = "Ausencia de moviento";
+//        if (binding.eventoRelajVesicula.isChecked()) manif = "Relajación de esfínter Vesical";
+//        if (binding.eventoRelajAnal.isChecked()) manif = "Relajación de esfínter Anal";
+//        if (binding.eventoRigidez.isChecked()) manif = "Rigidez de manos y/o pies";
+//        if (binding.eventoRelajMusculos.isChecked()) manif = "Relajación de musculos";
+//        if (binding.eventoSacudidas.isChecked()) manif = "Sacudidas de todo o parte del cuerpo";
+//    }
 
 
 
-}
+
+
+
