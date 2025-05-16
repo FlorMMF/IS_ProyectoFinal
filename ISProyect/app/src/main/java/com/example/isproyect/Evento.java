@@ -215,7 +215,7 @@ public class Evento extends AppCompatActivity {
         });
 
         binding.cancelButton.setOnClickListener(v -> {
-            clearForm(findViewById(R.id.activity_evento);
+            clearForm(findViewById(R.id.activity_evento));
             Intent intent = new Intent(Evento.this, MainActivity.class);
             startActivity(intent);
             finish();
