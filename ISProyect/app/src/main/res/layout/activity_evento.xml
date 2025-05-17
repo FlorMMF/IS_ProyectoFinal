@@ -11,7 +11,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/white"
     android:orientation="vertical"
     android:id = "@+id/activity_evento"
-    tools:context=".evento">
+    tools:context="Evento">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
@@ -199,6 +199,43 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Carbamazepina" />
+
+                <EditText
+                    android:id="@+id/CBZmg"
+                    android:layout_width="350dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="mg"
+                    android:inputType="number"
+                    android:visibility="gone"
+                    android:padding="8dp" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/radio24h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="c/24 horas" />
+
+                    <RadioButton
+                        android:id="@+id/radio12h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="c/12 horas" />
+
+                    <RadioButton
+                        android:id="@+id/radio8h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="c/8 horas" />
+                </RadioGroup>
 
                 <CheckBox
                     android:id="@+id/CLB"

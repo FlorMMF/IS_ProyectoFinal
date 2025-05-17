@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.TimePickerDialog;
 import android.widget.TimePicker;
+import android.widget.CheckBox;
+import android.widget.RadioButton;
 
 
 import androidx.annotation.NonNull;
@@ -240,7 +242,29 @@ public class Evento extends AppCompatActivity {
             }
         });
 
+        CheckBox checkBox = findViewById(R.id.CBZ);
+        EditText editText = findViewById(R.id.CBZmg);
+        RadioButton r1 = findViewById(R.id.radio24h);
+        RadioButton r2= findViewById(R.id.radio12h);
+        RadioButton r3= findViewById(R.id.radio8h);
+
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                editText.setVisibility(View.VISIBLE);
+                r1.setVisibility(View.VISIBLE);
+                r2.setVisibility(View.VISIBLE);
+                r3.setVisibility(View.VISIBLE);
+            } else {
+                editText.setVisibility(View.GONE);
+                r1.setVisibility(View.GONE);
+                r2.setVisibility(View.GONE);
+                r3.setVisibility(View.GONE);
+
+            }
+        });
+
     }
+
 
     private void clearForm(@NonNull ViewGroup viewById) {
         for (int i = 0, count = viewById.getChildCount(); i < count; ++i) {
