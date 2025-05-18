@@ -3,11 +3,9 @@ package com.example.isproyect;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Toast;
 import android.widget.DatePicker;
 import android.app.DatePickerDialog;
@@ -18,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.isproyect.databinding.ActivitySignUpBinding;
 
-import java.util.Calendar;
 import java.util.Objects;
 
 import SQL.Usuario;
@@ -73,12 +70,12 @@ private int day;
             pass = binding.signupPassword.getText().toString();
             pass2 = binding.signupPassword2.getText().toString();
 
-            checkGenero((ViewGroup) v);
-            checkEpilepsia((ViewGroup) v);
+            checkGenero();
+            checkEpilepsia();
 
             Usuario nuevo = new Usuario(user, pass);
 
-            if (user.isEmpty() || pass.isEmpty()) {
+            if (user.isEmpty() || pass.isEmpty()|| nombre.isEmpty() || apellido.isEmpty() || gender.isEmpty() || epilepsia.isEmpty()) {
                 Toast.makeText(sign_up.this, "Necesita llenar campos obligatorios", Toast.LENGTH_SHORT).show();
             } else if (!pass.equals(pass2)) {
                 Toast.makeText(sign_up.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
@@ -140,16 +137,16 @@ private int day;
         }
     }
 
-    private void checkGenero(ViewGroup viewById){
+    private void checkGenero(){
         if (binding.radioMasculino.isChecked()){
             gender = "Masculino";
-        };
+        }
         if (binding.radioFemenino.isChecked()){
             gender = "Femenino";
         }
     }
 
-    private void checkEpilepsia(ViewGroup viewById){
+    private void checkEpilepsia(){
         if (binding.radioTAepilepisa.isChecked()){
             epilepsia = "A";
         }

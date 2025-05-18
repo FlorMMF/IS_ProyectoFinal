@@ -48,6 +48,8 @@ public class Evento extends AppCompatActivity {
     private String horaEvento;
     private String manif;
     private String farm;
+    private String dosis;
+    private String frec;
 
     private int year;
     private int month;
@@ -154,7 +156,6 @@ public class Evento extends AppCompatActivity {
             }
         });
 
-
         Objects.requireNonNull(binding.eventoDiaEvento).setOnClickListener(v-> {
 
             final Calendar c = Calendar.getInstance();
@@ -237,7 +238,7 @@ public class Evento extends AppCompatActivity {
             fecha = binding.eventoDiaEvento.getText().toString();
             horaEvento = binding.eventoHoraEvento.getText().toString();
             manif = binding.eventoManif.getText().toString();
-            //farm = ;
+            checkFarm();
             SharedPreferences sp=getSharedPreferences("clave", Context.MODE_PRIVATE);
             String id = sp.getString("user", "");
             if (id.isEmpty()){
@@ -280,6 +281,19 @@ public class Evento extends AppCompatActivity {
 
     }
 
+    private void checkFarm(){
+        StringBuilder stbf = new StringBuilder();
+        StringBuilder stbd = new StringBuilder();
+        String temp;
+        if (binding.CBZ.isChecked()){
+            stbd.append("CBZ,");
+            temp = binding.CBZmg.getText().toString()+",";
+            stbd.append(temp);
+        }
+        farm = stbf.toString();
+        dosis = stbd.toString();
+    }
+
 
     private void clearForm(@NonNull ViewGroup viewById) {
         for (int i = 0, count = viewById.getChildCount(); i < count; ++i) {
@@ -293,6 +307,7 @@ public class Evento extends AppCompatActivity {
         }
     }
     }
+
 
 
 
