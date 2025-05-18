@@ -1,7 +1,9 @@
 package com.example.isproyect;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -17,9 +19,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -39,17 +45,29 @@ public class MainActivity extends AppCompatActivity {
         });
         */
 
-        binding.eventoButton.setOnClickListener(new View.OnClickListener() {
+        Objects.requireNonNull(binding.eventoButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Evento.class);
+                SharedPreferences sp=getSharedPreferences("clave", Context.MODE_PRIVATE);
+                String id = sp.getString("user", "");
+                Intent intent;
+                if (id.isEmpty()) {
+                    intent = new Intent(MainActivity.this, Login.class);
+                }else{
+                    intent = new Intent(MainActivity.this, Evento.class);
+                }
                 startActivity(intent);
+                finish();
             }
         });
 
-        binding.logoutButton.setOnClickListener(new View.OnClickListener() {
+        Objects.requireNonNull(binding.logoutButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sp=getSharedPreferences("clave", Context.MODE_PRIVATE);
+                SharedPreferences.Editor ed = sp.edit();
+                ed.putString("user", "");
+                ed.apply();
                 Intent intent = new Intent(MainActivity.this, Login.class);
                 startActivity(intent);
                 finish();

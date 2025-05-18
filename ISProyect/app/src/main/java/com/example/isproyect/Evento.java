@@ -1,8 +1,10 @@
 package com.example.isproyect;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,7 @@ import com.example.isproyect.databinding.ActivityEventoBinding;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Objects;
 
 import SQL.Usuario;
 
@@ -70,7 +73,7 @@ public class Evento extends AppCompatActivity {
 //        });
 
         selectedManif = new boolean[manifArray.length];
-        binding.eventoManif.setOnClickListener(new View.OnClickListener()  {
+        Objects.requireNonNull(binding.eventoManif).setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View view) {
 
@@ -152,7 +155,7 @@ public class Evento extends AppCompatActivity {
         });
 
 
-        binding.eventoDiaEvento.setOnClickListener(v-> {
+        Objects.requireNonNull(binding.eventoDiaEvento).setOnClickListener(v-> {
 
             final Calendar c = Calendar.getInstance();
 
@@ -175,7 +178,7 @@ public class Evento extends AppCompatActivity {
 
         });
 
-        binding.eventoHoraEvento.setOnClickListener(new View.OnClickListener() {
+        Objects.requireNonNull(binding.eventoHoraEvento).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar mcurrentTime = Calendar.getInstance();
@@ -216,20 +219,33 @@ public class Evento extends AppCompatActivity {
             }
         });
 
-        binding.cancelButton.setOnClickListener(v -> {
+        Objects.requireNonNull(binding.cancelButton).setOnClickListener(v -> {
             clearForm(findViewById(R.id.activity_evento));
-            Intent intent = new Intent(Evento.this, MainActivity.class);
+            SharedPreferences sp=getSharedPreferences("clave", Context.MODE_PRIVATE);
+            String id = sp.getString("user", "");
+            Intent intent;
+            if (id.isEmpty()) {
+                intent = new Intent(Evento.this, Login.class);
+            }else{
+                intent = new Intent(Evento.this, MainActivity.class);
+            }
             startActivity(intent);
             finish();
         });
 
-        binding.saveButton.setOnClickListener(v -> {
+        Objects.requireNonNull(binding.saveButton).setOnClickListener(v -> {
             fecha = binding.eventoDiaEvento.getText().toString();
             horaEvento = binding.eventoHoraEvento.getText().toString();
             manif = binding.eventoManif.getText().toString();
             //farm = ;
-
-            if (fecha.isEmpty() || horaEvento.isEmpty()|| manif.isEmpty()) {
+            SharedPreferences sp=getSharedPreferences("clave", Context.MODE_PRIVATE);
+            String id = sp.getString("user", "");
+            if (id.isEmpty()){
+                Intent intent = new Intent(Evento.this, Login.class);
+                startActivity(intent);
+                finish();
+            }
+            else if (fecha.isEmpty() || horaEvento.isEmpty()|| manif.isEmpty()) {
                 Toast.makeText(Evento.this, "Necesita llenar campos obligatorios", Toast.LENGTH_SHORT).show();
 //            } else if  (-1 != UsuarioDB.GuardarUsuario(nuevo)){
 //                Toast.makeText(Evento.this, "Evento registrado exitosamente", Toast.LENGTH_SHORT).show();
@@ -242,20 +258,19 @@ public class Evento extends AppCompatActivity {
             }
         });
 
-        CheckBox checkBox = findViewById(R.id.CBZ);
-        EditText editText = findViewById(R.id.CBZmg);
+
         RadioButton r1 = findViewById(R.id.radio24h);
         RadioButton r2= findViewById(R.id.radio12h);
         RadioButton r3= findViewById(R.id.radio8h);
 
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        Objects.requireNonNull(binding.CBZ).setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                editText.setVisibility(View.VISIBLE);
+                Objects.requireNonNull(binding.CBZmg).setVisibility(View.VISIBLE);
                 r1.setVisibility(View.VISIBLE);
                 r2.setVisibility(View.VISIBLE);
                 r3.setVisibility(View.VISIBLE);
             } else {
-                editText.setVisibility(View.GONE);
+                Objects.requireNonNull(binding.CBZmg).setVisibility(View.GONE);
                 r1.setVisibility(View.GONE);
                 r2.setVisibility(View.GONE);
                 r3.setVisibility(View.GONE);

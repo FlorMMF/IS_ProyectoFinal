@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.isproyect.databinding.ActivitySignUpBinding;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 import SQL.Usuario;
 import SQL.UsuarioDBconexion;
@@ -64,7 +65,7 @@ private int day;
         UsuarioDB = new UsuarioDBconexion( this);
 
 
-        binding.signupButton.setOnClickListener(v -> {
+        Objects.requireNonNull(binding.signupButton).setOnClickListener(v -> {
             user = binding.signupUser.getText().toString();
             nombre = binding.signupNombre.getText().toString();
             apellido = binding.signupApellido.getText().toString();
@@ -95,7 +96,7 @@ private int day;
         });
 
 
-        binding.cancelButton.setOnClickListener(v -> {
+        Objects.requireNonNull(binding.cancelButton).setOnClickListener(v -> {
             clearForm(findViewById(R.id.activity_sign_up));
             Intent intent = new Intent(sign_up.this, Login.class);
             startActivity(intent);
@@ -103,7 +104,7 @@ private int day;
         });
 
 
-        binding.signupNacimiento.setOnClickListener(v-> {
+        Objects.requireNonNull(binding.signupNacimiento).setOnClickListener(v-> {
 
                 final Calendar c = Calendar.getInstance();
 

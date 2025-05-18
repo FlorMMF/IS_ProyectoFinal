@@ -1,8 +1,11 @@
 package com.example.isproyect;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,6 +17,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.isproyect.databinding.ActivityLoginBinding;
 
+import java.util.Objects;
+
 import SQL.Usuario;
 import SQL.UsuarioDBconexion;
 
@@ -22,9 +27,32 @@ public class Login extends AppCompatActivity {
     ActivityLoginBinding binding;
     UsuarioDBconexion usuarioDB;
 
-    @SuppressLint("MissingInflatedId")
+    public class Session {
+
+        private SharedPreferences prefs;
+
+        public Session(Context ctx) {
+            prefs = getSharedPreferences( getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        }
+
+        public void setusername(String username) {
+            prefs.edit().putString("username", username).apply();
+        }
+
+        public String getusername() {
+            String username1;
+            username1 = prefs.getString("username","");
+            return username1;
+        }
+    }
+
+
+    @SuppressLint({"MissingInflatedId", "ApplySharedPref"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
 
         super.onCreate(savedInstanceState);
 
@@ -44,7 +72,7 @@ public class Login extends AppCompatActivity {
         });
 */
 
-        binding.loginButton.setOnClickListener(new View.OnClickListener() {
+        Objects.requireNonNull(binding.loginButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String user = binding.loginUsuario.getText().toString();
@@ -54,6 +82,10 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this,"Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
                 else if(usuarioDB.checkUserPass(user, pass))
                 {
+                    SharedPreferences sp=getSharedPreferences("clave", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor ed = sp.edit();
+                    ed.putString("user", user);
+                    ed.apply();
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -64,7 +96,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        binding.signupRedirectText.setOnClickListener(new View.OnClickListener() {
+        Objects.requireNonNull(binding.signupRedirectText).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Login.this, sign_up.class);
@@ -73,14 +105,25 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        binding.debugButton.setOnClickListener(new View.OnClickListener() {
+        Objects.requireNonNull(binding.debugButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                    String user = binding.loginUsuario.getText().toString();
+                SharedPreferences sp=getSharedPreferences("clave", Context.MODE_PRIVATE);
+                SharedPreferences.Editor ed = sp.edit();
+                ed.putString("user", user);
+                ed.apply();
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     startActivity(intent);
                     finish();
 
             }
         });
+
+
+
+
+
     }
 }
+
