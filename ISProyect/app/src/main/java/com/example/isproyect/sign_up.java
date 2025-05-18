@@ -152,13 +152,13 @@ private int day;
     private void checkEpilepsia(ViewGroup viewById){
         if (binding.radioTAepilepisa.isChecked()){
             epilepsia = "A";
-        };
+        }
         if (binding.radioTBepilepisa.isChecked()){
             epilepsia = "B";
-        };
+        }
         if (binding.radioTCepilepisa.isChecked()){
             epilepsia = "C";
-        };
+        }
         if (binding.radioTDepilepisa.isChecked()){
             epilepsia = "D";
         }
