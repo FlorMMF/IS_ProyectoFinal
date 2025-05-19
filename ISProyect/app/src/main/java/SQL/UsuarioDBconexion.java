@@ -10,7 +10,7 @@ import SQL.UsuarioToSQL.EntradaUsuario;
 
 public class UsuarioDBconexion extends SQLiteOpenHelper {
     private static final String DB_NAME="usuario.db";
-    private static final int DB_VERSION=2;
+    private static final int DB_VERSION=3;
 
     public UsuarioDBconexion(Context context) {
 
@@ -22,7 +22,7 @@ public class UsuarioDBconexion extends SQLiteOpenHelper {
          db.execSQL("CREATE TABLE " + EntradaUsuario.NOMBRE_TABLA + " ("
                  + EntradaUsuario._ID + " INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, "
                  + EntradaUsuario.ID + " TEXT UNIQUE, "
-                 + EntradaUsuario.NOMBRE + " TEXT NOT NULL UNIQUE, "
+                 + EntradaUsuario.NOMBRE + " TEXT NOT NULL UNIQUE , "
                  + EntradaUsuario.CONTRASENA + " TEXT NOT NULL "
                  + ")");
 
@@ -87,23 +87,45 @@ public class UsuarioDBconexion extends SQLiteOpenHelper {
     {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        Cursor cursor = sqLiteDatabase.rawQuery("Select * from Usuario where ID = ?", new String[]{user});
+        String columns[] = new String[]{EntradaUsuario.NOMBRE};
+        String selection = EntradaUsuario.NOMBRE + " LIKE ?"; // WHERE nombre LIKE ?
+        String selectionArgs[] = new String[]{user};
 
-        boolean b = cursor.getCount() > 0;
-        cursor.close();
+        Cursor c = sqLiteDatabase.query(
+                EntradaUsuario.NOMBRE_TABLA,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        boolean b = c.getCount() > 0;
+        c.close();
         return b;
     }
 
     public boolean checkUserPass(String user, String pass)
     {
-
-        boolean b;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        boolean b;
+        String columns[] = new String[]{EntradaUsuario.NOMBRE};
+        String selection = EntradaUsuario.CONTRASENA + " LIKE ?"; // WHERE contraseña LIKE ?
+        String selectionArgs[] = new String[]{pass};
 
-        Cursor cursor = sqLiteDatabase.rawQuery("Select * from Usuario where ID = ? AND Contrasena = ?", new String[]{user, pass});
+        Cursor c = sqLiteDatabase.query(
+                EntradaUsuario.NOMBRE_TABLA,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
 
-        b = cursor.getCount() > 0;
-        cursor.close();
+        b = c.getCount() > 0;
+        c.close();
         return b;
 
     }
