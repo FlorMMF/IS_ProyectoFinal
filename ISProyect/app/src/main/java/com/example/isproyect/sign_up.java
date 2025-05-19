@@ -73,7 +73,7 @@ private int day;
             checkGenero();
             checkEpilepsia();
 
-            Usuario nuevo = new Usuario(user, pass);
+            Usuario nuevo = new Usuario(user, pass,nombre,apellido,day+"/"+month+"/"+year, gender, epilepsia);
 
             if (user.isEmpty() || pass.isEmpty()|| nombre.isEmpty() || apellido.isEmpty() || gender.isEmpty() || epilepsia.isEmpty()) {
                 Toast.makeText(sign_up.this, "Necesita llenar campos obligatorios", Toast.LENGTH_SHORT).show();

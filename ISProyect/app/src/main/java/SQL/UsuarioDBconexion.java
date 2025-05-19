@@ -10,7 +10,7 @@ import SQL.UsuarioToSQL.EntradaUsuario;
 
 public class UsuarioDBconexion extends SQLiteOpenHelper {
     private static final String DB_NAME="usuario.db";
-    private static final int DB_VERSION=3;
+    private static final int DB_VERSION=5;
 
     public UsuarioDBconexion(Context context) {
 
@@ -22,8 +22,13 @@ public class UsuarioDBconexion extends SQLiteOpenHelper {
          db.execSQL("CREATE TABLE " + EntradaUsuario.NOMBRE_TABLA + " ("
                  + EntradaUsuario._ID + " INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, "
                  + EntradaUsuario.ID + " TEXT UNIQUE, "
-                 + EntradaUsuario.NOMBRE + " TEXT NOT NULL UNIQUE , "
-                 + EntradaUsuario.CONTRASENA + " TEXT NOT NULL "
+                 + EntradaUsuario.USER + " TEXT NOT NULL UNIQUE, "
+                 + EntradaUsuario.CONTRASENA + " TEXT NOT NULL, "
+                 + EntradaUsuario.NOMBRE + " TEXT NOT NULL, "
+                 + EntradaUsuario.APELLIDO + " TEXT NOT NULL, "
+                 + EntradaUsuario.NACIMIENTO + " TEXT NOT NULL, "
+                 + EntradaUsuario.GENERO + " TEXT NOT NULL, "
+                 + EntradaUsuario.EPILEPSIA + " TEXT NOT NULL"
                  + ")");
 
     }
@@ -52,8 +57,13 @@ public class UsuarioDBconexion extends SQLiteOpenHelper {
         try {
             String[] projection = {
                     UsuarioToSQL.EntradaUsuario.ID,
-                    UsuarioToSQL.EntradaUsuario.NOMBRE,
+                    UsuarioToSQL.EntradaUsuario.USER,
                     UsuarioToSQL.EntradaUsuario.CONTRASENA,
+                    UsuarioToSQL.EntradaUsuario.NOMBRE,
+                    UsuarioToSQL.EntradaUsuario.APELLIDO,
+                    UsuarioToSQL.EntradaUsuario.NACIMIENTO,
+                    UsuarioToSQL.EntradaUsuario.GENERO,
+                    UsuarioToSQL.EntradaUsuario.EPILEPSIA,
             };
 
             cursor = db.query(
@@ -68,10 +78,15 @@ public class UsuarioDBconexion extends SQLiteOpenHelper {
 
             while (cursor.moveToNext()) {
                 String id = cursor.getString(cursor.getColumnIndexOrThrow(UsuarioToSQL.EntradaUsuario.ID));
-                String nombre = cursor.getString(cursor.getColumnIndexOrThrow(UsuarioToSQL.EntradaUsuario.NOMBRE));
+                String user = cursor.getString(cursor.getColumnIndexOrThrow(UsuarioToSQL.EntradaUsuario.USER));
                 String contrasena = cursor.getString(cursor.getColumnIndexOrThrow(UsuarioToSQL.EntradaUsuario.CONTRASENA));
+                String nombre = cursor.getString(cursor.getColumnIndexOrThrow(UsuarioToSQL.EntradaUsuario.NOMBRE));
+                String apellido = cursor.getString(cursor.getColumnIndexOrThrow(UsuarioToSQL.EntradaUsuario.APELLIDO));
+                String nacimiento = cursor.getString(cursor.getColumnIndexOrThrow(EntradaUsuario.NACIMIENTO));
+                String genero = cursor.getString(cursor.getColumnIndexOrThrow(UsuarioToSQL.EntradaUsuario.GENERO));
+                String tipoEpilepsia = cursor.getString(cursor.getColumnIndexOrThrow(EntradaUsuario.EPILEPSIA));
 
-                Log.d("DB", "Usuario: " + nombre + " Contraseña: " + contrasena + ", ID interno: " + id);
+                Log.d("DB", "Usuario: " + user + " Contraseña: " + contrasena + "nombre: "+nombre+" "+apellido+"Fecha de nacimiento: "+nacimiento+"genero: "+genero+"tipo Epilepsia: "+tipoEpilepsia+", ID interno: " + id);
             }
 
         } catch (Exception e) {
@@ -87,8 +102,8 @@ public class UsuarioDBconexion extends SQLiteOpenHelper {
     {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        String columns[] = new String[]{EntradaUsuario.NOMBRE};
-        String selection = EntradaUsuario.NOMBRE + " LIKE ?"; // WHERE nombre LIKE ?
+        String columns[] = new String[]{EntradaUsuario.USER};
+        String selection = EntradaUsuario.USER + " LIKE ?"; // WHERE nombre LIKE ?
         String selectionArgs[] = new String[]{user};
 
         Cursor c = sqLiteDatabase.query(
@@ -110,9 +125,9 @@ public class UsuarioDBconexion extends SQLiteOpenHelper {
     {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         boolean b;
-        String columns[] = new String[]{EntradaUsuario.NOMBRE};
-        String selection = EntradaUsuario.CONTRASENA + " LIKE ?"; // WHERE contraseña LIKE ?
-        String selectionArgs[] = new String[]{pass};
+        String columns[] = new String[]{EntradaUsuario.USER};
+        String selection = EntradaUsuario.USER + " = ? AND " + EntradaUsuario.CONTRASENA + " = ?"; // WHERE contraseña LIKE ?
+        String selectionArgs[] = new String[]{user, pass};
 
         Cursor c = sqLiteDatabase.query(
                 EntradaUsuario.NOMBRE_TABLA,
