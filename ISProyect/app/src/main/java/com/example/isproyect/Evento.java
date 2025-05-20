@@ -34,7 +34,7 @@ import SQL.Usuario;
 public class Evento extends AppCompatActivity {
 
     ActivityEventoBinding binding;
-    TextView textView;
+
     boolean[] selectedManif;
     ArrayList<Integer> manifList = new ArrayList<>();
     String[] manifArray = {"1.Perdida de la conciencia", "2.Sensación de desorentación", "3.Trastornos visuales",
@@ -44,12 +44,20 @@ public class Evento extends AppCompatActivity {
     String[] manifKey={"MF_01","MF_02","MF_03","MF_04","MF_05","MF_06","MF_07","MF_08","MF_09","MF_10","MF_11",
             "MF_12","MF_13"};
 
+    boolean[] selectedFarm;
+    ArrayList<Integer> farmList = new ArrayList<>();
+    String[] farmArray = {"Carbamazepina", "Clobazam", "Clonazepam","Diazepam", "Etosuximida", "Felbamato","Gabapentina",
+            "Levetiracetam", "Lamotrigina","Lorazepam", "Midazolam","Oxcarbazepina","Fenobarbital","Pregabalina",
+            "Fenitoína","Primidona","Rufinamida","Tiagabina","Topiramato","Vigabatrina","Ácido valproico","Zonisamida"};
+    String[] farmKey={"CBZ","CLB","CZP","DZP","ESM","FBM","GBP","LEV","LTG","LZP","MDZ","OXC","PB","PGB","PHT","PRM",
+            "RFM","TGB","TPM","VGB","VPA","ZNS"};
+
     private String fecha;
     private String horaEvento;
     private String manif;
     private String farm;
-    private String dosis;
-    private String frec;
+    //private String dosis;
+    //private String frec;
 
     private int year;
     private int month;
@@ -125,8 +133,8 @@ public class Evento extends AppCompatActivity {
                         }
                         // set text on textView
                         manif = stringBuilder.toString();
-                        //binding.eventoManif.setText(manif);
-                        Toast.makeText(Evento.this, manif, Toast.LENGTH_LONG).show();
+                        binding.eventoManif.setText(manif);
+                        //Toast.makeText(Evento.this, manif, Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -147,7 +155,7 @@ public class Evento extends AppCompatActivity {
                             // clear language list
                             manifList.clear();
                             // clear text view value
-                            textView.setText("");
+                            binding.eventoManif.setText("");
                         }
                     }
                 });
@@ -237,8 +245,7 @@ public class Evento extends AppCompatActivity {
         Objects.requireNonNull(binding.saveButton).setOnClickListener(v -> {
             fecha = binding.eventoDiaEvento.getText().toString();
             horaEvento = binding.eventoHoraEvento.getText().toString();
-            manif = binding.eventoManif.getText().toString();
-            checkFarm();
+
             SharedPreferences sp=getSharedPreferences("clave", Context.MODE_PRIVATE);
             String id = sp.getString("user", "");
             if (id.isEmpty()){
@@ -246,7 +253,7 @@ public class Evento extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-            else if (fecha.isEmpty() || horaEvento.isEmpty()|| manif.isEmpty()) {
+            else if (fecha.isEmpty() || horaEvento.isEmpty()|| manif.isEmpty()||farm.isEmpty()) {
                 Toast.makeText(Evento.this, "Necesita llenar campos obligatorios", Toast.LENGTH_SHORT).show();
 //            } else if  (-1 != UsuarioDB.GuardarUsuario(nuevo)){
 //                Toast.makeText(Evento.this, "Evento registrado exitosamente", Toast.LENGTH_SHORT).show();
@@ -259,29 +266,108 @@ public class Evento extends AppCompatActivity {
             }
         });
 
+        selectedFarm= new boolean[farmArray.length];
+        Objects.requireNonNull(binding.farmacos).setOnClickListener(view -> {
 
-        RadioButton r1 = findViewById(R.id.radio24h);
-        RadioButton r2= findViewById(R.id.radio12h);
-        RadioButton r3= findViewById(R.id.radio8h);
+            // Initialize alert dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(Evento.this);
 
-        Objects.requireNonNull(binding.CBZ).setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                Objects.requireNonNull(binding.CBZmg).setVisibility(View.VISIBLE);
-                r1.setVisibility(View.VISIBLE);
-                r2.setVisibility(View.VISIBLE);
-                r3.setVisibility(View.VISIBLE);
-            } else {
-                Objects.requireNonNull(binding.CBZmg).setVisibility(View.GONE);
-                r1.setVisibility(View.GONE);
-                r2.setVisibility(View.GONE);
-                r3.setVisibility(View.GONE);
+            // set title
+            builder.setTitle("Elija farmacos");
 
-            }
+            // set dialog non cancelable
+            builder.setCancelable(false);
+
+            builder.setMultiChoiceItems(farmArray, selectedFarm, new DialogInterface.OnMultiChoiceClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                    // check condition
+                    if (b) {
+                        // when checkbox selected
+                        // Add position  in lang list
+                        farmList.add(i);
+                        // Sort array list
+                        Collections.sort(farmList);
+                    } else {
+                        // when checkbox unselected
+                        // Remove position from langList
+                        farmList.remove(Integer.valueOf(i));
+                    }
+                }
+            });
+
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Initialize string builder
+                    StringBuilder stringBuilder = new StringBuilder();
+                    // use for loop
+                    for (int j = 0; j < farmList.size(); j++) {
+                        // concat array value
+                        stringBuilder.append(farmKey[farmList.get(j)]);
+                        // check condition
+                        if (j != farmList.size() - 1) {
+                            // When j value  not equal
+                            // to lang list size - 1
+                            // add comma
+                            stringBuilder.append(", ");
+                        }
+                    }
+                    // set text on textView
+                    farm = stringBuilder.toString();
+                    binding.farmacos.setText(farm);
+                    //Toast.makeText(Evento.this, farm, Toast.LENGTH_LONG).show();
+                }
+            });
+
+            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // dismiss dialog
+                    dialogInterface.dismiss();
+                }
+            });
+            builder.setNeutralButton("Borrar Todo", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // use for loop
+                    for (int j = 0; j < selectedManif.length; j++) {
+                        // remove all selection
+                        selectedManif[j] = false;
+                        // clear language list
+                        manifList.clear();
+                        // clear text view value
+                        binding.eventoManif.setText("");
+                    }
+                }
+            });
+            // show dialog
+            builder.show();
         });
+
+
+//        RadioButton r1 = findViewById(R.id.radio24h);
+//        RadioButton r2= findViewById(R.id.radio12h);
+//        RadioButton r3= findViewById(R.id.radio8h);
+//
+//        Objects.requireNonNull(binding.CBZ).setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            if (isChecked) {
+//                Objects.requireNonNull(binding.CBZmg).setVisibility(View.VISIBLE);
+//                r1.setVisibility(View.VISIBLE);
+//                r2.setVisibility(View.VISIBLE);
+//                r3.setVisibility(View.VISIBLE);
+//            } else {
+//                Objects.requireNonNull(binding.CBZmg).setVisibility(View.GONE);
+//                r1.setVisibility(View.GONE);
+//                r2.setVisibility(View.GONE);
+//                r3.setVisibility(View.GONE);
+//
+//            }
+//        });
 
     }
 
-    private void checkFarm(){
+   /* private void checkFarm(){
         StringBuilder stbf = new StringBuilder();
         StringBuilder stbd = new StringBuilder();
         String temp;
@@ -292,7 +378,7 @@ public class Evento extends AppCompatActivity {
         }
         farm = stbf.toString();
         dosis = stbd.toString();
-    }
+    }*/
 
 
     private void clearForm(@NonNull ViewGroup viewById) {

@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
                 if (id.isEmpty()) {
                     intent = new Intent(MainActivity.this, Login.class);
                 }else{
-                    //intent = new Intent(MainActivity.this, Evento.class);
+                    intent = new Intent(MainActivity.this, Evento.class);
                 }
-                //startActivity(intent);
+                startActivity(intent);
                 finish();
             }
         });
