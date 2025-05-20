@@ -258,7 +258,7 @@ public class Activity_Evento extends AppCompatActivity {
                 Intent intent = new Intent(Activity_Evento.this, Login.class);
                 startActivity(intent);
                 finish();
-            }else if (fecha.isEmpty() || horaEvento.isEmpty()|| manif.isEmpty()||farm.isEmpty()) {
+            }else if (fecha.isEmpty() || horaEvento.isEmpty()|| manif==null) {
                 Toast.makeText(Activity_Evento.this, "Necesita llenar campos obligatorios", Toast.LENGTH_SHORT).show();
             } else if  (-1 != EventoDB.GuardarEvento(nuevo,id)){
                 Toast.makeText(Activity_Evento.this, "Evento registrado exitosamente", Toast.LENGTH_SHORT).show();

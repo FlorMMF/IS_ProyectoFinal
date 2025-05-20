@@ -30,8 +30,16 @@ public class Evento {
         values.put(EventoToSQL.EntradaEvento.USER, usuario);
         values.put(EventoToSQL.EntradaEvento.FECHA, fecha);
         values.put(EventoToSQL.EntradaEvento.HORA, hora);
-        values.put(EventoToSQL.EntradaEvento.MANIFESTACIONES, manifestacionesSeleccionadas);
-        values.put(EventoToSQL.EntradaEvento.FARMACOS, farmacosSeleccionados);
+        if(manifestacionesSeleccionadas!=null){
+            values.put(EventoToSQL.EntradaEvento.MANIFESTACIONES, manifestacionesSeleccionadas);
+        }else{
+            values.put(EventoToSQL.EntradaEvento.MANIFESTACIONES, " ");
+        }
+        if(farmacosSeleccionados!=null){
+            values.put(EventoToSQL.EntradaEvento.FARMACOS, farmacosSeleccionados);
+        }else{
+            values.put(EventoToSQL.EntradaEvento.FARMACOS, " ");
+        }
 
         return values;
     }
