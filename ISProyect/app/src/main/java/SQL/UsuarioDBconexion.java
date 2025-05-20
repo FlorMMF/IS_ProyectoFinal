@@ -6,11 +6,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.EnumMap;
+
 import SQL.UsuarioToSQL.EntradaUsuario;
+import SQL.EventoToSQL.EntradaEvento;
 
 public class UsuarioDBconexion extends SQLiteOpenHelper {
     private static final String DB_NAME="usuario.db";
-    private static final int DB_VERSION=5;
+    private static final int DB_VERSION=10;
 
     public UsuarioDBconexion(Context context) {
 
@@ -31,12 +34,24 @@ public class UsuarioDBconexion extends SQLiteOpenHelper {
                  + EntradaUsuario.EPILEPSIA + " TEXT NOT NULL"
                  + ")");
 
+         db.execSQL("CREATE TABLE " + EntradaEvento.NOMBRE_TABLA + " ("
+                 + EntradaUsuario._ID + " INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, "
+                 + EntradaUsuario.ID + " TEXT UNIQUE, "
+                 + EntradaEvento.USER + " TEXT NOT NULL, "
+                 + EntradaEvento.FECHA + " TEXT NOT NULL, "
+                 + EntradaEvento.HORA + " TEXT NOT NULL, "
+                 + EntradaEvento.MANIFESTACIONES + " TEXT, "
+                 +EntradaEvento.FARMACOS + " TEXT "
+                 + ")");
+
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //codigo sql
         db.execSQL("DROP TABLE IF EXISTS " + EntradaUsuario.NOMBRE_TABLA);
+        db.execSQL("DROP TABLE IF EXISTS " + EntradaEvento.NOMBRE_TABLA);
         onCreate(db);
     }
 
@@ -49,6 +64,18 @@ public class UsuarioDBconexion extends SQLiteOpenHelper {
             Log.e("DB", "Error al guardar el usuario", e);
         }
         return id;
+    }
+
+    public long GuardarEvento(Evento evento, String usuario){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        long id = -1;
+        try {
+            id = sqLiteDatabase.insert(EntradaEvento.NOMBRE_TABLA, null, evento.toContentValues(usuario));
+        } catch (Exception e) {
+            Log.e("DB", "Error al guardar el evento", e);
+        }
+        return id;
+
     }
 
     public void leerUsuario() {

@@ -105,25 +105,6 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        Objects.requireNonNull(binding.debugButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    String user = binding.loginUsuario.getText().toString();
-                SharedPreferences sp=getSharedPreferences("clave", Context.MODE_PRIVATE);
-                SharedPreferences.Editor ed = sp.edit();
-                ed.putString("user", user);
-                ed.apply();
-                    Intent intent = new Intent(Login.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-
-            }
-        });
-
-
-
-
-
     }
 }
 

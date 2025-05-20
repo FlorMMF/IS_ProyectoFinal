@@ -6,18 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.isproyect.R;
-import com.example.isproyect.databinding.ActivityLoginBinding;
 import com.example.isproyect.databinding.ActivityMainBinding;
-import com.example.isproyect.databinding.ActivitySignUpBinding;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import java.util.Objects;
 
@@ -54,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 if (id.isEmpty()) {
                     intent = new Intent(MainActivity.this, Login.class);
                 }else{
-                    intent = new Intent(MainActivity.this, Evento.class);
+                    intent = new Intent(MainActivity.this, Activity_Evento.class);
                 }
                 startActivity(intent);
                 finish();

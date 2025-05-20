@@ -1,6 +1,7 @@
 package com.example.isproyect;
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,12 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.app.TimePickerDialog;
 import android.widget.TimePicker;
-import android.widget.CheckBox;
-import android.widget.RadioButton;
 
 
 import androidx.annotation.NonNull;
@@ -29,11 +27,13 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Objects;
 
-import SQL.Usuario;
+import SQL.Evento;
+import SQL.UsuarioDBconexion;
 
-public class Evento extends AppCompatActivity {
+public class Activity_Evento extends AppCompatActivity {
 
     ActivityEventoBinding binding;
+    UsuarioDBconexion EventoDB;
 
     boolean[] selectedManif;
     ArrayList<Integer> manifList = new ArrayList<>();
@@ -41,7 +41,7 @@ public class Evento extends AppCompatActivity {
             "4.Trastornos auditivos", "5.Trastorno sensorial del cuerpo", "6.Trastornos olfatorios","7.Movimiento en manos o pies",
             "8.Ausencia de moviento", "9.Relajación de esfínter Vesical","10.Relajación de esfínter Anal", "11.Rigidez de manos y/o pies",
             "12.Relajación de musculos","13.Sacudidas de todo o parte del cuerpo"};
-    String[] manifKey={"MF_01","MF_02","MF_03","MF_04","MF_05","MF_06","MF_07","MF_08","MF_09","MF_10","MF_11",
+    public static final String[] manifKey={"MF_01","MF_02","MF_03","MF_04","MF_05","MF_06","MF_07","MF_08","MF_09","MF_10","MF_11",
             "MF_12","MF_13"};
 
     boolean[] selectedFarm;
@@ -49,7 +49,7 @@ public class Evento extends AppCompatActivity {
     String[] farmArray = {"Carbamazepina", "Clobazam", "Clonazepam","Diazepam", "Etosuximida", "Felbamato","Gabapentina",
             "Levetiracetam", "Lamotrigina","Lorazepam", "Midazolam","Oxcarbazepina","Fenobarbital","Pregabalina",
             "Fenitoína","Primidona","Rufinamida","Tiagabina","Topiramato","Vigabatrina","Ácido valproico","Zonisamida"};
-    String[] farmKey={"CBZ","CLB","CZP","DZP","ESM","FBM","GBP","LEV","LTG","LZP","MDZ","OXC","PB","PGB","PHT","PRM",
+    public static final String[] farmKey={"CBZ","CLB","CZP","DZP","ESM","FBM","GBP","LEV","LTG","LZP","MDZ","OXC","PB","PGB","PHT","PRM",
             "RFM","TGB","TPM","VGB","VPA","ZNS"};
 
     private String fecha;
@@ -69,6 +69,7 @@ public class Evento extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,13 +83,15 @@ public class Evento extends AppCompatActivity {
 //            return insets;
 //        });
 
+        EventoDB = new UsuarioDBconexion( this);
+
         selectedManif = new boolean[manifArray.length];
         Objects.requireNonNull(binding.eventoManif).setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View view) {
 
                 // Initialize alert dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(Evento.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Activity_Evento.this);
 
                 // set title
                 builder.setTitle("Elija manifestaciones");
@@ -118,6 +121,7 @@ public class Evento extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // Initialize string builder
+
                         StringBuilder stringBuilder = new StringBuilder();
                         // use for loop
                         for (int j = 0; j < manifList.size(); j++) {
@@ -130,11 +134,12 @@ public class Evento extends AppCompatActivity {
                                 // add comma
                                 stringBuilder.append(", ");
                             }
+
                         }
                         // set text on textView
                         manif = stringBuilder.toString();
                         binding.eventoManif.setText(manif);
-                        //Toast.makeText(Evento.this, manif, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Activity_Evento.this, manif, Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -175,7 +180,7 @@ public class Evento extends AppCompatActivity {
 
 
             DatePickerDialog dialog = new DatePickerDialog(
-                    Evento.this, new DatePickerDialog.OnDateSetListener() {
+                    Activity_Evento.this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker datepicker, int year, int month, int dayOfMonth) {
                     fecha =dayOfMonth + "/" + (month + 1) + "/" + year;
@@ -194,7 +199,7 @@ public class Evento extends AppCompatActivity {
                 hora = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 minuto = mcurrentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(Evento.this, new TimePickerDialog.OnTimeSetListener() {
+                mTimePicker = new TimePickerDialog(Activity_Evento.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker,  int hourOfDay, int minute) {
                         hora = hourOfDay;
@@ -234,9 +239,9 @@ public class Evento extends AppCompatActivity {
             String id = sp.getString("user", "");
             Intent intent;
             if (id.isEmpty()) {
-                intent = new Intent(Evento.this, Login.class);
+                intent = new Intent(Activity_Evento.this, Login.class);
             }else{
-                intent = new Intent(Evento.this, MainActivity.class);
+                intent = new Intent(Activity_Evento.this, MainActivity.class);
             }
             startActivity(intent);
             finish();
@@ -248,21 +253,21 @@ public class Evento extends AppCompatActivity {
 
             SharedPreferences sp=getSharedPreferences("clave", Context.MODE_PRIVATE);
             String id = sp.getString("user", "");
+            Evento nuevo=new Evento(fecha,horaEvento,manif, farm );
             if (id.isEmpty()){
-                Intent intent = new Intent(Evento.this, Login.class);
+                Intent intent = new Intent(Activity_Evento.this, Login.class);
                 startActivity(intent);
                 finish();
-            }
-            else if (fecha.isEmpty() || horaEvento.isEmpty()|| manif.isEmpty()||farm.isEmpty()) {
-                Toast.makeText(Evento.this, "Necesita llenar campos obligatorios", Toast.LENGTH_SHORT).show();
-//            } else if  (-1 != UsuarioDB.GuardarUsuario(nuevo)){
-//                Toast.makeText(Evento.this, "Evento registrado exitosamente", Toast.LENGTH_SHORT).show();
-//                clearForm(findViewById(R.id.activity_evento));
-//                Intent intent = new Intent(Evento.this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
+            }else if (fecha.isEmpty() || horaEvento.isEmpty()|| manif.isEmpty()||farm.isEmpty()) {
+                Toast.makeText(Activity_Evento.this, "Necesita llenar campos obligatorios", Toast.LENGTH_SHORT).show();
+            } else if  (-1 != EventoDB.GuardarEvento(nuevo,id)){
+                Toast.makeText(Activity_Evento.this, "Evento registrado exitosamente", Toast.LENGTH_SHORT).show();
+                clearForm(findViewById(R.id.activity_evento));
+                Intent intent = new Intent(Activity_Evento.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }else {
-                Toast.makeText(Evento.this,"Error en registro",Toast.LENGTH_SHORT).show();
+                Toast.makeText(Activity_Evento.this,"Error en registro",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -270,7 +275,7 @@ public class Evento extends AppCompatActivity {
         Objects.requireNonNull(binding.farmacos).setOnClickListener(view -> {
 
             // Initialize alert dialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(Evento.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(Activity_Evento.this);
 
             // set title
             builder.setTitle("Elija farmacos");
@@ -312,11 +317,12 @@ public class Evento extends AppCompatActivity {
                             // add comma
                             stringBuilder.append(", ");
                         }
+
                     }
                     // set text on textView
                     farm = stringBuilder.toString();
                     binding.farmacos.setText(farm);
-                    //Toast.makeText(Evento.this, farm, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(Activity_Evento.this, farm, Toast.LENGTH_LONG).show();
                 }
             });
 
