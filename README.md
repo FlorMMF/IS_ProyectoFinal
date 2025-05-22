@@ -13,7 +13,8 @@ La aplicación está pensada como una solución móvil para que pacientes con ep
 ##  Estado del proyecto
 Se a desarrollado el prototipo de la aplicación en la cual se puede registrar, iniciar sesión y registrar eventos en una base de datos.
 
-![Evento] (tabla evento.jpeg)
+<img src="IS_ProyectoFinal/tabla-evento.jpeg" />
+
 
 ###  Instalación y ejecución
 
