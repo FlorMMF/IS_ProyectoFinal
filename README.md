@@ -13,10 +13,14 @@ La aplicación está pensada como una solución móvil para que pacientes con ep
 ##  Estado del proyecto
 Se a desarrollado el prototipo de la aplicación en la cual se puede registrar, iniciar sesión y registrar eventos en una base de datos.
 
-
+Tabla en la que se registran los eventos:
 ![tabla-evento](https://github.com/user-attachments/assets/d8faa652-deef-4a74-bc13-ebf81de118c8)
 
-https://github.com/user-attachments/assets/0baeca83-dc33-4650-acdd-722a32b39805
+
+Visualización de la aplicación móvil:
+
+https://github.com/user-attachments/assets/cf747709-e16e-4fbc-9c5f-9da18d9a0efe
+
 
 
 
