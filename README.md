@@ -11,8 +11,9 @@ La aplicación está pensada como una solución móvil para que pacientes con ep
  desarrollado en **Android Studio** utilizando codigo de **Java**
 
 ##  Estado del proyecto
+Se a desarrollado el prototipo de la aplicación en la cual se puede registrar, iniciar sesión y registrar eventos en una base de datos.
 
-El proyecto se encuentra en una etapa temprana de desarrollo. Actualmente, se están construyendo las funcionalidades base del prototipo.
+![Evento] (tabla evento.jpeg)
 
 ###  Instalación y ejecución
 
